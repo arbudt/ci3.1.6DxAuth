@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<!-- Mirrored from dexcell.shinsengumiteam.com/dx_auth/upgrade.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 13 Apr 2011 07:28:30 GMT -->
+<head>
+
+<style type='text/css' media='all'>@import url('userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='userguide.css' />
+
+<script type="text/javascript" src="nav/nav.js"></script>
+<script type="text/javascript" src="nav/prototype.lite.js"></script>
+<script type="text/javascript" src="nav/moo.fx.js"></script>
+<script type="text/javascript" src="nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Dexcell' />
+<meta name='description' content='DX Auth User Guide' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Upgrade : DX Auth User Guide</title>
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('index-2.html');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>DX Auth User Guide Version 1.0</h1></td>
+<td id="breadcrumb_right"><a href="toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="index-2.html">DX Auth Home</a> &nbsp;&#8250;&nbsp;
+<a href="index.html">User Guide Home</a> &nbsp;&#8250;&nbsp; Upgrade
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="dexcell.shinsengumiteam.com/dx_auth/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+<h1>From version 1.0.5 to 1.0.6</h1>
+<ul>
+	<li>Add DX_salt and DX_captcha_case_sensitive into config.</li>
+	<li>Since now DX Auth do not use encryption_key in CI config to encode password. <br/>
+	If your encryption_key is not blank before this update, you need to change encode function in libraries/DX_Auth.php to DX Auth 1.0.5 version.</li>
+	<li>Overwrite libraries/dx_auth.php with the new one.</li>
+	<li>Overwrite models/dx_auth/permissions.php with the new one.</li>	
+</ul>
+
+<h1>From version 1.0.4 to 1.0.5</h1>
+<ul>
+	<li>Overwrite models/dx_auth/user_temp.php with the new one.</li>
+	<li>Overwrite models/dx_auth/permissions.php with the new one.</li>	
+</ul>
+
+<h1>From version 1.0.3 to 1.0.4</h1>
+
+<p>If you use is_role() function, be careful because in 1.0.4, $use_role_name parameter default is TRUE. </p>
+<p>In previous version, $use_role_name parameter is defined as FALSE by default, even tough it was written as TRUE in documentation. So now it's fixed.</p>
+
+<h1>From version 1.0.2 to 1.0.3</h1>
+
+<p>Change function get_catpcha_image() to get_captcha_image(). Notice the first function is wrongly typed.</p>
+
+<h1>From version 1.0.1 to 1.0.2</h1>
+
+<h2>Step 1: Update your roles table</h2>
+<p>Add parent_id field (int) not null default is 0, in roles table.</p>
+<p>To add this column you will run a query similar to this:</p>
+<pre>
+ALTER TABLE `roles` ADD `parent_id` int(11) NOT NULL default '0'
+</pre>
+<p>See <a href="general/tables.html">table anatomy</a> to know more about this.</p>
+
+<h2>Step 2: Add permissions table</h2>
+<p>To add this table you will run a query similar to this:</p>
+<pre>
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL auto_increment,
+  `role_id` int(11) NOT NULL,
+  `data` text collate utf8_bin,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+</pre>
+<p>See <a href="general/tables.html">table anatomy</a> to know more about this.</p>
+<p class="important"><strong>Note:</strong> role_uri table will be abandonded, in 1.0.2 it will use this permission table.</p>
+
+</div>
+<!-- END CONTENT -->
+
+
+
+<div id="footer">
+<p><a href="#top">Top of Page</a></p>
+<p><a href="index-2.html">DX Auth</a> &nbsp;&middot;&nbsp; Copyright &#169; 2008 &nbsp;&middot;&nbsp; <a href="http://dexcell.shinsengumiteam.com/">Dexcell</a></p>
+</div>
+
+</body>
+
+<!-- Mirrored from dexcell.shinsengumiteam.com/dx_auth/upgrade.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 13 Apr 2011 07:28:30 GMT -->
+</html>
